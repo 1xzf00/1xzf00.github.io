@@ -276,6 +276,14 @@ nav {
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius);
+    overflow: hidden; /* Prevent image from spilling out */
+}
+
+.pic-vibes img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
 }
 
 /* Flex Grid Section */
@@ -299,6 +307,14 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden; /* Prevent image from spilling out */
+}
+
+.fire-pic img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
 }
 
 .deadass-link {
