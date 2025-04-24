@@ -1,0 +1,558 @@
+/* Base styles and variables */
+:root {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --accent-color: #ff4081;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --card-shadow: rgba(0, 0, 0, 0.2);
+    --glass-blur: 10px;
+    --border-radius: 14px;
+    --spacing: 24px;
+    --max-width: 1200px;
+    --transition: all 0.3s ease;
+    
+    /* unused variables from old design */
+    --secondary-color: #3d5afe;
+    --danger-color: #ff1744;
+    --success-color: #00e676;
+    --old-bg: #0a0a0a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    /* -webkit-font-smoothing: antialiased; */ /* removed for now */
+    scroll-behavior: smooth; /* Add smooth scrolling behavior to the whole page */
+}
+
+/* Vibecheck Background Pattern */
+.vibecheck-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.05;
+    background-size: 50px 50px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+.vibecheck-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 64, 129, 0.1) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+/* X Pattern Background - Replace JS generateXPattern */
+.vibecheck-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(45deg, transparent 0, transparent 10px, rgba(255, 64, 129, 0.03) 10px, rgba(255, 64, 129, 0.03) 12px),
+        repeating-linear-gradient(-45deg, transparent 0, transparent 10px, rgba(255, 64, 129, 0.03) 10px, rgba(255, 64, 129, 0.03) 12px);
+    background-size: 100px 100px;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Container for all content */
+.main-vibe {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing);
+}
+
+/* Finna Card Effect */
+.finna-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 30px var(--card-shadow);
+    padding: var(--spacing);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.finna-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* unique-card class that was never used */
+.unique-card {
+    background: linear-gradient(145deg, var(--card-bg), rgba(30, 30, 30, 0.2));
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+/* Unused header style
+h4 {
+    font-size: 1.3rem;
+    color: #fcfcfc;
+    letter-spacing: 0.5px;
+}
+*/
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.brand-flex {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.squad-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+/* Forgot to remove this old nav style
+.primary-nav {
+    display: flex;
+    gap: 1.5em;
+    margin-top: 15px;
+}
+*/
+
+/* Skrrt Zone Section */
+.skrrt-zone {
+    padding: 6rem 0;
+    text-align: center;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: translateZ(-5px) scale(1.625);
+}
+
+.lowkey-vibe {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.no-cap {
+    color: var(--accent-color);
+    position: relative;
+}
+
+.yeet-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.btn.vibe-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn.vibe-btn:hover {
+    background-color: #d81b60;
+    transform: translateY(-2px);
+}
+
+.btn.sus-btn {
+    background-color: transparent;
+    border: 1px solid var(--card-border);
+}
+
+.btn.sus-btn:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* Tea Spill Section */
+.tea-spill {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing);
+    align-items: center;
+}
+
+.selfie-drip {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pic-vibes {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+}
+
+/* Flex Grid Section */
+.flex-grid-fr {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing);
+}
+
+.slap-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fire-pic {
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deadass-link {
+    margin-top: auto;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Skill Check Section */
+.skill-check {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing);
+}
+
+.flex-zone {
+    height: 100%;
+}
+
+.flex-zone ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.flex-zone li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.flex-zone li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+/* Slide In Container Section */
+.slide-in-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing);
+}
+
+.hit-me-up ul {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.hit-me-up li {
+    margin-bottom: 0.75rem;
+}
+
+.insta-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.stan-link {
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    border: 1px solid var(--card-border);
+    transition: var(--transition);
+}
+
+.stan-link:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* contact-me was the old name for this class
+.contact-me {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+*/
+
+.dm-slide {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.text-fit {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-weight: 500;
+}
+
+input, textarea {
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-family: inherit;
+    resize: none;
+    transition: var(--transition);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    opacity: 0.7;
+}
+
+/* Bussin Text */
+.bussin-text {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.bussin-text span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: textFadeIn 0.8s forwards;
+}
+
+@keyframes textFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add animation delay for each character */
+.bussin-text span:nth-child(1) { animation-delay: 0.1s; }
+.bussin-text span:nth-child(2) { animation-delay: 0.15s; }
+.bussin-text span:nth-child(3) { animation-delay: 0.2s; }
+.bussin-text span:nth-child(4) { animation-delay: 0.25s; }
+.bussin-text span:nth-child(5) { animation-delay: 0.3s; }
+.bussin-text span:nth-child(6) { animation-delay: 0.35s; }
+.bussin-text span:nth-child(7) { animation-delay: 0.4s; }
+.bussin-text span:nth-child(8) { animation-delay: 0.45s; }
+.bussin-text span:nth-child(9) { animation-delay: 0.5s; }
+.bussin-text span:nth-child(10) { animation-delay: 0.55s; }
+.bussin-text span:nth-child(11) { animation-delay: 0.6s; }
+.bussin-text span:nth-child(12) { animation-delay: 0.65s; }
+.bussin-text span:nth-child(13) { animation-delay: 0.7s; }
+.bussin-text span:nth-child(14) { animation-delay: 0.75s; }
+.bussin-text span:nth-child(15) { animation-delay: 0.8s; }
+
+/* Parallax Classes - Replace JS scroll effects */
+.parallax-slow {
+    transform: translateZ(-10px) scale(2);
+    z-index: -1;
+}
+
+.parallax-medium {
+    transform: translateZ(-5px) scale(1.5);
+    z-index: -1;
+}
+
+.parallax-fast {
+    transform: translateZ(0);
+    z-index: 0;
+}
+
+/* Simple Parallax Effect for Cards */
+@media (min-width: 768px) {
+    .finna-card:nth-child(odd) {
+        transform: perspective(1000px) translateZ(0);
+        transition: transform 0.5s ease;
+    }
+    
+    .finna-card:nth-child(even) {
+        transform: perspective(1000px) translateZ(0);
+        transition: transform 0.5s ease;
+    }
+    
+    /* Create parallax effect without JS on scroll */
+    .parallax-container {
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        perspective: 8px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    :root {
+        --spacing: 16px;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .squad-links {
+        gap: 1rem;
+    }
+    
+    .tea-spill,
+    .slide-in-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .skrrt-zone {
+        padding: 3rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    .yeet-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Old code I'm keeping around for reference
+.darkTheme {
+    --primary: #212121;
+    --text: #e0e0e0;
+}
+*/
+
+/* we might add these animations back
+.fadeIn {
+    animation: fadeIn 1s ease forwards;
+}
+.slideIn {
+    animation: slideIn 0.5s ease forwards;
+}
+*/
