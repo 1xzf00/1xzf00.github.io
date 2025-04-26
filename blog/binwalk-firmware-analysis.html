@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysing Firmware with Binwalk | Blog | 1xZF00</title>
+    <link rel="stylesheet" href="../styles.css"> 
+    <link rel="icon" type="image/png" href="../fav.png"> 
+    <style>
+        /* Styles specific to blog post pages */
+        .blog-content h2, .blog-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content ul {
+            list-style: disc;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content code {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .blog-content pre { /* Style for code blocks */
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        .blog-content pre code {
+             background-color: transparent; /* Reset background for code inside pre */
+             padding: 0;
+        }
+        .blog-content strong { /* Make strong tags stand out */
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        /* Simple nav for blog page */
+        .blog-nav {
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .blog-nav a {
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="vibecheck-bg"></div>
+
+    <div class="main-vibe">
+        <nav class="blog-nav finna-card">
+            <a href="/">Home</a>
+            <a href="/blog.html">Blog</a>
+        </nav>
+
+        <main class="finna-card">
+            <a href="/blog.html" class="back-link">← Back to Blog</a>
+            <h1>Analysing and extracting firmware using Binwalk</h1>
+            <p class="post-meta">Published on <time datetime="2025-04-25">April 25, 2025</time></p>
+
+            <div class="blog-content">
+                <h2>What is Binwalk?</h2>
+                <p><strong>Binwalk 3.1.0</strong> is a powerful open-source tool used for analyzing and extracting data from binary files, specifically firmware images. Built for information security professionals and reverse engineers, Binwalk identifies embedded files, compressions, and potential encryption within binary data.</p>
+
+                <h3>What makes this version exciting?</h3>
+                <ul>
+                    <li>Rewritten in Rust for better performance and reduced false positives.</li>
+                    <li>Improved file extraction capabilities and support for modern compression methods.</li>
+                    <li>Enhanced support for NTFS, APFS, and other file systems.</li>
+                </ul>
+
+                <h2>What Can You Do with Binwalk 3.1.0?</h2>
+                <p>Let’s explore its core functionalities with detailed technical insights and scenarios:</p>
+
+                <h3>1. Signature Scanning</h3>
+                <p>Binwalk identifies embedded files, headers, and known data types automatically by matching against a database of file signatures.</p>
+                <h4>Technical Insight</h4>
+                <p>Binwalk’s magic signature database (<code>/etc/binwalk/magic</code>) contains file signature definitions. It scans binary files for matching patterns and offsets to identify embedded data.</p>
+                <h4>Scenario</h4>
+                <p>You’ve downloaded a firmware update for a device and want to determine if it contains recognizable components, such as images or configuration files.</p>
+                <h4>Example Command</h4>
+                <pre><code>binwalk firmware.bin</code></pre>
+                <h4>Sample Output</h4>
+                <pre><code>DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             PNG image, 1920 x 1080, 8-bit/color RGB
+20480         0x5000          Zlib compressed data</code></pre>
+
+                <h3>2. Entropy Analysis</h3>
+                <p>Entropy analysis helps detect encrypted or compressed regions in binaries by measuring randomness in data.</p>
+                <h4>Technical Insight</h4>
+                <p>Compressed and encrypted data exhibit high entropy, while plaintext or structured data (e.g., ASCII text) exhibits lower entropy.</p>
+                <h4>Scenario</h4>
+                <p>You suspect a firmware binary contains encrypted sections and want to locate them for further analysis.</p>
+                <h4>Example Command</h4>
+                <pre><code>binwalk --entropy firmware.bin</code></pre>
+                <h4>What You’ll See</h4>
+                <p>Binwalk outputs entropy scores for different file regions. Regions with high entropy suggest compression or encryption.</p>
+
+                <h3>3. File Extraction</h3>
+                <p>Binwalk extracts embedded files automatically or recursively using extractors defined in its configuration.</p>
+                <h4>Technical Insight</h4>
+                <p>The default extraction rules (<code>extract.conf</code>) tell Binwalk how to handle specific file types (e.g., gzip, tar). Recursive extraction applies these rules to extracted data.</p>
+                <h4>Scenario</h4>
+                <p>You need to extract all files embedded in a firmware image for inspection, including scripts, images, and archives.</p>
+                <h4>Example Command</h4>
+                <pre><code>binwalk --extract firmware.bin</code></pre>
+                <h4>Recursive Extraction</h4>
+                <pre><code>binwalk --extract --matryoshka firmware.bin</code></pre>
+
+                <h3>4. Firmware Structure Analysis</h3>
+                <p>Analyze firmware structure for file systems, compression methods, and architectures.</p>
+                <h4>Technical Insight</h4>
+                <p>Binwalk identifies file system offsets, compression headers, and architectural details to help reverse engineers dissect firmware.</p>
+                <h4>Scenario</h4>
+                <p>You’re reverse-engineering a firmware binary to understand its file system and compression.</p>
+                <h4>Example Command</h4>
+                <pre><code>binwalk --extract --matryoshka firmware.bin</code></pre>
+                <h4>Complementary Tools</h4>
+                <ul>
+                    <li><strong>SquashFS Tools:</strong> For mounting SquashFS file systems extracted by Binwalk.</li>
+                    <li><strong>JFFS2 Utilities:</strong> For inspecting JFFS2 file systems.</li>
+                    <li><strong>unsquashfs:</strong> To directly extract SquashFS images.</li>
+                </ul>
+
+                <h3>5. Custom Scanning with Signatures</h3>
+                <p>Define custom rules to detect proprietary or unknown file types by adding them to Binwalk’s signature database.</p>
+                <h4>Technical Insight</h4>
+                <p>Custom signatures are defined in <code>/etc/binwalk/magic</code> using the <code>file</code> utility syntax. Each entry specifies a pattern, offset, and description of the data.</p>
+                <h4>Scenario</h4>
+                <p>You’re analyzing a proprietary firmware file and need to look for a custom pattern.</p>
+                <h4>Example Command</h4>
+                <pre><code>binwalk -D='signature:extension' firmware.bin</code></pre>
+                <h4>How to Create Custom Signatures</h4>
+                <ol>
+                    <li>Open the <code>/etc/binwalk/magic</code> file in a text editor.</li>
+                    <li>Define your signature using the <code>file</code> syntax. Example:
+                        <pre><code>0 string CUSTOMSIG Custom file format ></code></pre>
+                    </li>
+                    <li>Save and test the signature:
+                        <pre><code>binwalk firmware.bin</code></pre>
+                    </li>
+                </ol>
+
+                <h3>6. Visualization</h3>
+                <p>Generate entropy graphs to visualize data patterns in the binary.</p>
+                <h4>Technical Insight</h4>
+                <p>Entropy graphs are useful for spotting compressed or encrypted regions visually. While Binwalk no longer directly supports graphing, you can pipe entropy data to external tools like Gnuplot.</p>
+                <h4>Scenario</h4>
+                <p>You want a visual representation of a binary’s structure to identify patterns or anomalies.</p>
+                <h4>Command for Entropy Graph</h4>
+                <pre><code>binwalk --entropy firmware.bin > entropy.log
+gnuplot entropy.log</code></pre>
+
+                <h2>Conclusion</h2>
+                <p><strong>Binwalk 3.1.0</strong> offers unmatched power for firmware analysis. From signature scanning to entropy graphs, it’s your ultimate tool for decoding binaries. With improved performance and new features, it’s a must-have for reverse engineers and security researchers.</p>
+
+                <h3>Install Binwalk 3.1.0</h3>
+                <pre><code>git clone https://github.com/ReFirmLabs/binwalk.git
+cd binwalk
+sudo python3 setup.py install</code></pre>
+                <p>Go ahead — unlock the secrets hidden in your binaries! 🔓</p>
+            </div>
+        </main>
+
+        <footer class="finna-card parallax-slow">
+            <p>© 2025 Portfolio. All rights reserved.</p>
+            <p>Designed and built with sigma</p>
+        </footer>
+    </div>
+</body>
+</html>

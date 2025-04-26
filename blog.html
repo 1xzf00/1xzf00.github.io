@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | 1xZF00</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="fav.png">
+    <style>
+        /* Add specific styles for the blog page if needed */
+        .blog-post {
+            margin-bottom: var(--spacing);
+            padding-bottom: var(--spacing);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .blog-post:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .blog-post h3 {
+            margin-bottom: 0.5rem;
+        }
+        .blog-post .post-meta {
+            font-size: 0.9rem;
+            color: rgba(240, 240, 240, 0.7);
+            margin-bottom: 1rem;
+        }
+        .blog-post .read-more-link { /* Changed class name */
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none; /* Optional: remove underline */
+        }
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        /* Simple nav for blog page */
+        .blog-nav {
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .blog-nav a {
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="vibecheck-bg"></div>
+
+    <div class="main-vibe">
+        <nav class="blog-nav finna-card">
+            <a href="/">Home</a>
+            <a href="/blog.html">Blog</a>
+        </nav>
+
+        <header class="blog-header">
+            <h1>My Blog</h1>
+            <p class="lowkey-vibe">Thoughts, tutorials, and random musings.</p>
+        </header>
+
+        <main class="finna-card">
+            <h2>Latest Posts</h2>
+
+            <article class="blog-post">
+                <h3>Bun vs. NPM vs. Yarn: A Comprehensive Guide</h3>
+                <p class="post-meta">Published on <time datetime="2025-04-26">April 26, 2025</time></p>
+                <p>An in-depth comparison of Bun, npm, and Yarn, helping you decide which JavaScript package manager best fits your needs...</p>
+                <a href="blog/bun-vs-npm-vs-yarn.html" class="read-more-link">Read More →</a>
+            </article>
+
+            <article class="blog-post">
+                <h3>Analysing and extracting firmware using Binwalk</h3>
+                <p class="post-meta">Published on <time datetime="2025-04-25">April 25, 2025</time></p> <!-- Adjusted date -->
+                <p>Explore Binwalk 3.1.0, a powerful tool for analyzing and extracting data from binary files, especially firmware images...</p>
+                <a href="blog/binwalk-firmware-analysis.html" class="read-more-link">Read More →</a>
+            </article>
+
+        </main>
+
+        <footer class="finna-card parallax-slow">
+            <p>© 2025 Portfolio. All rights reserved.</p>
+            <p>Designed and built with sigma</p>
+        </footer>
+    </div>
+</body>
+</html>
